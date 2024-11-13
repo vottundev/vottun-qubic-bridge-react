@@ -11,7 +11,7 @@ export const Home = (): FunctionComponent => {
    const [activeStep, setActiveStep] = useState<number>(0);
 
    /*********************
-	// #region States
+	// #region Functions
 	**********************/
    const handleStepCompleted = useCallback(() => {
       setActiveStep((previous) => previous + 1);

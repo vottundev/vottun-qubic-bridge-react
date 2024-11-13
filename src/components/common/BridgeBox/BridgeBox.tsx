@@ -2,13 +2,14 @@ import { IoMdSwap } from "react-icons/io";
 import { cn } from "@/lib/utils";
 ////////////////////////////////////////////////////////
 import type { FunctionComponent } from "@/common/types";
+import type { BridgeTypeProps } from "@/components/common";
 
-type BridgeTypeProps = "evm-qubic" | "qubic-evm";
 interface BridgeBoxProps {
    type: BridgeTypeProps;
    text: string;
    logoFrom: string;
    logoTo: string;
+   connectWallet: (env: BridgeTypeProps) => void;
 }
 
 export const BridgeBox: React.FC<BridgeBoxProps> = ({
@@ -16,6 +17,7 @@ export const BridgeBox: React.FC<BridgeBoxProps> = ({
    text,
    logoFrom,
    logoTo,
+   connectWallet,
 }): FunctionComponent => {
    return (
       <div
@@ -23,6 +25,9 @@ export const BridgeBox: React.FC<BridgeBoxProps> = ({
             "flex flex-1 flex-col items-center justify-center gap-2 px-16 py-24 rounded-2xl  cursor-pointer transition ease-in-out duration-300 hover:scale-110 hover:filter hover:brightness-90 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none",
             type === "evm-qubic" ? "bg-[#1F2A37]" : "bg-primary text-black"
          )}
+         onClick={() => {
+            connectWallet(type);
+         }}
       >
          <div className="flex flex-col gap-6 items-center">
             <p className="text-2xl font-semibold">{text}</p>

@@ -3,7 +3,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider, type createRouter } from "@tanstack/react-router";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
+
 //////////////////////////////////////////////////////////////////////////////
+import "@rainbow-me/rainbowkit/styles.css";
 import config from "../wagmi.config";
 import type { FunctionComponent } from "@/common/types";
 import { TanStackRouterDevelopmentTools } from "@/components/utils/development-tools/TanStackRouterDevelopmentTools";
@@ -17,15 +19,11 @@ const App = ({ router }: AppProps): FunctionComponent => {
       <WagmiProvider config={config}>
          <QueryClientProvider client={queryClient}>
             <RainbowKitProvider
+               theme={darkTheme()}
                appInfo={{
                   appName: "Qubic Bridge",
                   learnMoreUrl: "",
                }}
-               theme={darkTheme({
-                  accentColor: "#111927",
-                  accentColorForeground: "white",
-                  overlayBlur: "small",
-               })}
             >
                <RouterProvider router={router} />
                <TanStackRouterDevelopmentTools
