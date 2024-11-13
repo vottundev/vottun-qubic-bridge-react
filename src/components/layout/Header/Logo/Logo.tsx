@@ -1,5 +1,6 @@
 import type { FunctionComponent } from "@/common/types";
+import LogoImage from "@/assets/images/main-logo.svg";
 
 export const Logo = (): FunctionComponent => {
-	return <h1 className="text-white text-6xl">Logo</h1>;
+   return <img alt="Qubic Bridge" src={LogoImage} />;
 };

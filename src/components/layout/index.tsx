@@ -5,9 +5,10 @@ import { Header } from "./Header";
 
 export const Layout = (): FunctionComponent => {
    return (
-      <div className="w-screen h-screen flex flex-col justify-center items-center">
-         <Header /> 🎸
-         <div>
+      <div className="w-screen h-screen">
+         <Header />
+
+         <div className="container mx-auto px-12">
             <Outlet />
          </div>
       </div>
