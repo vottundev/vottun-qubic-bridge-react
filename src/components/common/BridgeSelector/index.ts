@@ -1,1 +1,1 @@
-export { BridgeSelector } from "./BridgeSelector";
+export * from "./BridgeSelector";

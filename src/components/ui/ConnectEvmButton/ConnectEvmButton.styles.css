@@ -1,0 +1,12 @@
+.wrong-network {
+	background-color: #050d2c;
+	padding: 7px 15px;
+	border-radius: 8px;
+}
+
+.network-selector {
+	border: 2px solid #0077ff;
+	background-color: #050d2c;
+	padding: 10px 15px;
+	border-radius: 8px;
+}
