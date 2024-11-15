@@ -1,10 +1,16 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { Step, Stepper } from "react-form-stepper";
 ////////////////////////////////////////////////////////////
 import type { FunctionComponent } from "@/common/types";
-import { BridgeSelector, Swapper } from "@/components/common";
+import { BridgeConnection, BridgeSelector, Swapper } from "@/components/common";
 
 export const Home = (): FunctionComponent => {
+   /*********************
+	// #region Hooks
+	**********************/
+   const account = useAccount();
+
    /*********************
 	// #region States
 	**********************/
@@ -13,7 +19,7 @@ export const Home = (): FunctionComponent => {
    /*********************
 	// #region Functions
 	**********************/
-   const handleStepCompleted = useCallback(() => {
+   const handleStepForward = useCallback(() => {
       setActiveStep((previous) => previous + 1);
    }, []);
 
@@ -21,8 +27,13 @@ export const Home = (): FunctionComponent => {
       setActiveStep((previous) => previous - 1);
    }, []);
 
+   useEffect(() => {
+      if (!account.isConnected) return;
+      console.log("EVM account in home scope:", account);
+   }, [account]);
+
    return (
-      <div className="mx-24">
+      <div className="mx-0 xl:mx-24">
          <Stepper
             activeStep={activeStep}
             connectorStyleConfig={{
@@ -48,25 +59,21 @@ export const Home = (): FunctionComponent => {
                fontFamily: '"Kumbh Sans", "sans-serif"',
             }}
          >
-            <Step
-               label="Select"
-               onClick={() => {
-                  setActiveStep(0);
-               }}
-            />
-            <Step
-               label="Bridge"
-               onClick={() => {
-                  console.log("clicked");
-                  setActiveStep(1);
-               }}
-            />
+            <Step label="Select" />
+            <Step label="Connect" />
+            <Step label="Bridge" />
          </Stepper>
 
          {activeStep === 0 && (
-            <BridgeSelector isCompleted={handleStepCompleted} />
+            <BridgeSelector stepForward={handleStepForward} />
          )}
-         {activeStep === 1 && <Swapper stepBack={handleStepBack} />}
+         {activeStep === 1 && (
+            <BridgeConnection
+               stepBack={handleStepBack}
+               stepForward={handleStepForward}
+            />
+         )}
+         {activeStep === 2 && <Swapper stepBack={handleStepBack} />}
       </div>
    );
 };

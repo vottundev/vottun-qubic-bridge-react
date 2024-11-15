@@ -46,8 +46,7 @@ export const ConnectEvmButton = (): FunctionComponent => {
                      if (!connected) {
                         return (
                            <Button
-                              className="px-0"
-                              size="sm"
+                              size="default"
                               type="button"
                               onClick={openConnectModal}
                            >
