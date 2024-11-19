@@ -19,7 +19,6 @@ export const ConnectEvm: React.FC = () => {
 	// #region Effects
 	**********************/
    useEffect(() => {
-      console.log(account);
       if (account.isConnected) {
          connectEvm({
             address: account.address,
@@ -35,7 +34,7 @@ export const ConnectEvm: React.FC = () => {
    }, [account, connectEvm]);
 
    return (
-      <>
+      <div className="flex items-center gap-3 ">
          <BridgeBox
             className="mb-8 mt-4"
             logoFrom={ETHFrom}
@@ -44,9 +43,9 @@ export const ConnectEvm: React.FC = () => {
             text="EVM to qubic"
             type={BridgeType.EVM_TO_QUBIC}
          />
-         <div className="flex justify-center items-center my-8 w-full">
+         <div className="flex flex-1 justify-center items-center px-16 py-24">
             <ConnectEvmButton />
          </div>
-      </>
+      </div>
    );
 };

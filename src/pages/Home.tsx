@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
+import { toast } from "sonner";
 import { Step, Stepper } from "react-form-stepper";
 ////////////////////////////////////////////////////////////
 import type { FunctionComponent } from "@/common/types";
@@ -10,6 +11,7 @@ export const Home = (): FunctionComponent => {
 	// #region Hooks
 	**********************/
    const account = useAccount();
+   const { disconnect } = useDisconnect();
 
    /*********************
 	// #region States
@@ -27,10 +29,31 @@ export const Home = (): FunctionComponent => {
       setActiveStep((previous) => previous - 1);
    }, []);
 
+   const resetProcess = useCallback(
+      (shouldDisconnect: boolean) => {
+         if (!shouldDisconnect) {
+            setActiveStep(0);
+            return;
+         }
+
+         disconnect();
+         setActiveStep(0);
+
+         toast.success(
+            `Account ${account.address} has been disconnected from ${account.chain!.name} succesfully`
+         );
+      },
+      [disconnect, account.address, account.chain]
+   );
+
    useEffect(() => {
-      if (!account.isConnected) return;
-      console.log("EVM account in home scope:", account);
-   }, [account]);
+      if (account.isConnected) {
+         setActiveStep(1);
+         return;
+      }
+
+      setActiveStep(0);
+   }, [account.isConnected]);
 
    return (
       <div className="mx-0 xl:mx-24">
@@ -59,7 +82,12 @@ export const Home = (): FunctionComponent => {
                fontFamily: '"Kumbh Sans", "sans-serif"',
             }}
          >
-            <Step label="Select" />
+            <Step
+               label="Select"
+               onClick={() => {
+                  resetProcess(account.isConnected);
+               }}
+            />
             <Step label="Connect" />
             <Step label="Bridge" />
          </Stepper>
@@ -68,10 +96,7 @@ export const Home = (): FunctionComponent => {
             <BridgeSelector stepForward={handleStepForward} />
          )}
          {activeStep === 1 && (
-            <BridgeConnection
-               stepBack={handleStepBack}
-               stepForward={handleStepForward}
-            />
+            <BridgeConnection stepForward={handleStepForward} />
          )}
          {activeStep === 2 && <Swapper stepBack={handleStepBack} />}
       </div>

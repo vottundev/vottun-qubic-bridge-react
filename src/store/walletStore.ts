@@ -1,25 +1,26 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type { BridgeTypeProps } from "@/components/common";
+import type { EvmWallet, QubicWallet } from "@/types/wallet";
 import { BridgeType } from "@/common/types";
-
-interface Wallet {
-   address: `0x${string}` | undefined;
-   isConnected: boolean;
-}
 
 interface WalletState {
    environment: BridgeTypeProps | undefined;
-   evmAddress: Wallet;
-   qubicAddress: Wallet;
+   evmAddress: EvmWallet;
+   qubicAddress: QubicWallet;
    setEnvironment: (env: BridgeTypeProps) => void;
-   connectEvm: (payload: Wallet) => void;
-   connectQubic: (payload: Wallet) => void;
+   connectEvm: (payload: EvmWallet) => void;
+   connectQubic: (payload: QubicWallet) => void;
    disconnectEvm: () => void;
    disconnectQubic: () => void;
 }
 
-const walletInitialState: Wallet = {
+const evmWalletInitialState: EvmWallet = {
+   address: undefined,
+   isConnected: false,
+};
+
+const qubicWalletInitialState: QubicWallet = {
    address: undefined,
    isConnected: false,
 };
@@ -29,27 +30,27 @@ export const useWalletStore = create<WalletState>()(
       persist(
          (set) => ({
             environment: BridgeType.EVM_TO_QUBIC,
-            evmAddress: walletInitialState,
-            qubicAddress: walletInitialState,
+            evmAddress: evmWalletInitialState,
+            qubicAddress: qubicWalletInitialState,
             setEnvironment: (payload: BridgeTypeProps): void => {
                set((state) => ({ ...state, environment: payload }));
             },
-            connectEvm: (payload: Wallet): void => {
+            connectEvm: (payload: EvmWallet): void => {
                set((state) => ({ ...state, evmAddress: payload }));
             },
-            connectQubic: (payload: Wallet): void => {
+            connectQubic: (payload: QubicWallet): void => {
                set((state) => ({ ...state, qubicAddress: payload }));
             },
             disconnectEvm: (): void => {
                set((state) => ({
                   ...state,
-                  evmAddress: walletInitialState,
+                  evmAddress: evmWalletInitialState,
                }));
             },
             disconnectQubic: (): void => {
                set((state) => ({
                   ...state,
-                  qubicAddress: walletInitialState,
+                  qubicAddress: qubicWalletInitialState,
                }));
             },
          }),

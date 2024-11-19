@@ -1,7 +1,7 @@
 import { http } from "wagmi";
 import { arbitrum, arbitrumSepolia, mainnet, sepolia } from "wagmi/chains";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { isProduction } from "./src/common/utils";
+import { isProduction } from "@/common/utils";
 
 const config = getDefaultConfig({
    appName: "Qubic Bridge",

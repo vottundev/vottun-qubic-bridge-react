@@ -1,48 +1,55 @@
-// import { useCallback, useEffect } from "react";
-////////////////////////////////////////////////////////
 import { BridgeType } from "@/common/types";
 import { useWalletStore } from "@/store/walletStore";
+import { Button } from "@/components/ui";
 import { ConnectEvm } from "./ConnectEvm";
 import { ConnectQubic } from "./ConnectQubic";
-import { useEffect } from "react";
 
 interface BridgeConnectionProps {
    stepForward: () => void;
-   stepBack: () => void;
 }
 
 export const BridgeConnection: React.FC<BridgeConnectionProps> = ({
    stepForward,
-   stepBack,
 }) => {
    /*********************
 	// #region Hooks
 	**********************/
-   const {
-      environment,
-      // evmAddress,
-      // qubicAddress,
-      // connectEvm,
-      // connectQubic,
-      // disconnectEvm,
-      // disconnectQubic,
-   } = useWalletStore();
-
-   /*********************
-	// #region Functions
-	**********************/
-
-   /*********************
-	// #region Effects
-	**********************/
-   useEffect(() => {
-      console.log(stepBack, stepForward);
-   }, [stepBack, stepForward]);
+   const { environment, evmAddress, qubicAddress } = useWalletStore();
 
    return (
       <>
-         {environment === BridgeType.EVM_TO_QUBIC && <ConnectEvm />}
-         {environment === BridgeType.QUBIC_TO_EVM && <ConnectQubic />}
+         {environment === BridgeType.EVM_TO_QUBIC && (
+            <>
+               <ConnectEvm />
+               {evmAddress.address && evmAddress.isConnected && (
+                  <div className="flex mt-8">
+                     <Button
+                        className="text-xl"
+                        size={"full"}
+                        onClick={stepForward}
+                     >
+                        Bridge to Qubic
+                     </Button>
+                  </div>
+               )}
+            </>
+         )}
+         {environment === BridgeType.QUBIC_TO_EVM && (
+            <>
+               <ConnectQubic />
+               {qubicAddress.address && qubicAddress.isConnected && (
+                  <div className="flex mt-8">
+                     <Button
+                        className="text-xl"
+                        size={"full"}
+                        onClick={stepForward}
+                     >
+                        Bridge to EVM
+                     </Button>
+                  </div>
+               )}
+            </>
+         )}
       </>
    );
 };
