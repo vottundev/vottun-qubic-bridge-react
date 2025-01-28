@@ -35,3 +35,6 @@ storybook-static
 
 # tests
 /coverage/
+
+# Million Lint
+.million

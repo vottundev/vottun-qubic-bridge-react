@@ -1,13 +1,13 @@
+import React from "react";
 import { toast } from "sonner";
 /////////////////////////////////////////////////////
-import { BridgeType } from "@/common/types";
-import { BridgeBox } from "@/components/common";
-import { ConnectQubicButton } from "@/components/ui";
+import { BridgeTypeEnum } from "@/enums";
+import { BridgeBox, ConnectQubicButton } from "@/components/common";
 import { useWalletStore } from "@/store/walletStore";
 import ETHTo from "@/assets/images/eth-to.svg";
 import QubicTo from "@/assets/images/qubic-to.svg";
 
-export const ConnectQubic: React.FC = () => {
+export const ConnectQubic: React.FC = React.memo(() => {
    /*********************
 	// #region Hooks
 	**********************/
@@ -40,11 +40,11 @@ export const ConnectQubic: React.FC = () => {
             logoTo={QubicTo}
             selectEnvironment={() => {}}
             text="qubic to EVM"
-            type={BridgeType.QUBIC_TO_EVM}
+            type={BridgeTypeEnum.QUBIC_TO_EVM}
          />
          <div className="flex flex-1 justify-center items-center px-16 py-24">
             <ConnectQubicButton isConnected={handleConnection} />
          </div>
       </div>
    );
-};
+});

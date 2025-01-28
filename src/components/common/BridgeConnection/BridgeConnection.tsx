@@ -1,5 +1,5 @@
-import { BridgeType } from "@/common/types";
-import { useWalletStore } from "@/store/walletStore";
+import { BridgeTypeEnum } from "@/enums";
+import { useWalletStore, useBridgeStore } from "@/store";
 import { Button } from "@/components/ui";
 import { ConnectEvm } from "./ConnectEvm";
 import { ConnectQubic } from "./ConnectQubic";
@@ -14,11 +14,12 @@ export const BridgeConnection: React.FC<BridgeConnectionProps> = ({
    /*********************
 	// #region Hooks
 	**********************/
-   const { environment, evmAddress, qubicAddress } = useWalletStore();
+   const { evmAddress, qubicAddress } = useWalletStore();
+   const { environment } = useBridgeStore();
 
    return (
       <>
-         {environment === BridgeType.EVM_TO_QUBIC && (
+         {environment === BridgeTypeEnum.EVM_TO_QUBIC && (
             <>
                <ConnectEvm />
                {evmAddress.address && evmAddress.isConnected && (
@@ -34,9 +35,10 @@ export const BridgeConnection: React.FC<BridgeConnectionProps> = ({
                )}
             </>
          )}
-         {environment === BridgeType.QUBIC_TO_EVM && (
+         {environment === BridgeTypeEnum.QUBIC_TO_EVM && (
             <>
                <ConnectQubic />
+
                {qubicAddress.address && qubicAddress.isConnected && (
                   <div className="flex mt-8">
                      <Button

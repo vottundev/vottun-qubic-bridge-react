@@ -1,15 +1,13 @@
 import { useCallback } from "react";
 ////////////////////////////////////////////////////////
-import { BridgeType } from "@/common/types";
-import { useWalletStore } from "@/store/walletStore";
-import { BridgeSelectorHeader } from "./BridgeSelectorHeader";
+import { BridgeTypeEnum } from "@/enums";
+import { useBridgeStore } from "@/store";
 import { BridgeBox } from "@/components/common";
+import { BridgeSelectorHeader } from "./BridgeSelectorHeader";
 import ETHFrom from "@/assets/images/eth-from.svg";
 import QubicFrom from "@/assets/images/qubic-from.svg";
 import ETHTo from "@/assets/images/eth-to.svg";
 import QubicTo from "@/assets/images/qubic-to.svg";
-
-export type BridgeTypeProps = BridgeType;
 
 interface BridgeSelectorProps {
    stepForward: () => void;
@@ -21,13 +19,13 @@ export const BridgeSelector: React.FC<BridgeSelectorProps> = ({
    /*********************
 	// #region Hooks
 	**********************/
-   const { setEnvironment } = useWalletStore();
+   const { setEnvironment } = useBridgeStore();
 
    /*********************
 	// #region Functions
 	**********************/
    const handleWalletConnection = useCallback(
-      (type: BridgeTypeProps) => {
+      (type: BridgeTypeEnum) => {
          setEnvironment(type);
          stepForward();
       },
@@ -44,14 +42,14 @@ export const BridgeSelector: React.FC<BridgeSelectorProps> = ({
                logoTo={QubicFrom}
                selectEnvironment={handleWalletConnection}
                text="EVM to qubic"
-               type={BridgeType.EVM_TO_QUBIC}
+               type={BridgeTypeEnum.EVM_TO_QUBIC}
             />
             <BridgeBox
                logoFrom={ETHTo}
                logoTo={QubicTo}
                selectEnvironment={handleWalletConnection}
                text="qubic to EVM"
-               type={BridgeType.QUBIC_TO_EVM}
+               type={BridgeTypeEnum.QUBIC_TO_EVM}
             />
          </div>
       </>

@@ -7,8 +7,3 @@ type IconProps = HeroIconSVGProps & {
    titleId?: string;
 };
 export type Heroicon = React.FC<IconProps>;
-
-export enum BridgeType {
-   EVM_TO_QUBIC = "evm-qubic",
-   QUBIC_TO_EVM = "qubic-evm",
-}

@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from "@storybook/react";
 import { BridgeBox } from "./BridgeBox";
-import { BridgeType } from "@/common/types";
+import { BridgeTypeEnum } from "@/enums";
 import ETHFrom from "@/assets/images/eth-from.svg";
 import QubicFrom from "@/assets/images/qubic-from.svg";
 import ETHTo from "@/assets/images/eth-to.svg";
@@ -13,7 +13,7 @@ export default {
       type: {
          control: {
             type: "radio",
-            options: [BridgeType.EVM_TO_QUBIC, BridgeType.QUBIC_TO_EVM],
+            options: [BridgeTypeEnum.EVM_TO_QUBIC, BridgeTypeEnum.QUBIC_TO_EVM],
          },
       },
       text: { control: "text" },
@@ -30,7 +30,7 @@ const Template: StoryFn<typeof BridgeBox> = (args) => (
 
 export const EvmToQubic = Template.bind({});
 EvmToQubic.args = {
-   type: BridgeType.EVM_TO_QUBIC,
+   type: BridgeTypeEnum.EVM_TO_QUBIC,
    text: "EVM to Qubic Swap",
    logoFrom: ETHFrom,
    logoTo: QubicFrom,
@@ -38,7 +38,7 @@ EvmToQubic.args = {
 
 export const QubicToEvm = Template.bind({});
 QubicToEvm.args = {
-   type: BridgeType.QUBIC_TO_EVM,
+   type: BridgeTypeEnum.QUBIC_TO_EVM,
    text: "Qubic to EVM Swap",
    logoFrom: ETHTo,
    logoTo: QubicTo,

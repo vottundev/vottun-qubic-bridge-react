@@ -1,8 +1,9 @@
+import React from "react";
 import { IoMdSwap } from "react-icons/io";
 ////////////////////////////////////////////////////////
 import type { FunctionComponent } from "@/common/types";
 
-export const BridgeSelectorHeader = (): FunctionComponent => {
+export const BridgeSelectorHeader = React.memo((): FunctionComponent => {
    return (
       <div className="flex flex-col p-8 xl:mx-28">
          <div className="flex items-center gap-2 mb-4">
@@ -18,4 +19,4 @@ export const BridgeSelectorHeader = (): FunctionComponent => {
          </p>
       </div>
    );
-};
+});

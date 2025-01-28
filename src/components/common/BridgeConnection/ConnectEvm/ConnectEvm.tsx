@@ -1,14 +1,13 @@
 import { useAccount } from "wagmi";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 ////////////////////////////////////////////////////////
-import { BridgeType } from "@/common/types";
-import { ConnectEvmButton } from "@/components/ui";
-import { BridgeBox } from "@/components/common";
+import { BridgeTypeEnum } from "@/enums";
+import { BridgeBox, ConnectEvmButton } from "@/components/common";
 import { useWalletStore } from "@/store/walletStore";
 import ETHFrom from "@/assets/images/eth-from.svg";
 import QubicFrom from "@/assets/images/qubic-from.svg";
 
-export const ConnectEvm: React.FC = () => {
+export const ConnectEvm: React.FC = memo(() => {
    /*********************
 	// #region Hooks
 	**********************/
@@ -41,11 +40,11 @@ export const ConnectEvm: React.FC = () => {
             logoTo={QubicFrom}
             selectEnvironment={() => {}}
             text="EVM to qubic"
-            type={BridgeType.EVM_TO_QUBIC}
+            type={BridgeTypeEnum.EVM_TO_QUBIC}
          />
          <div className="flex flex-1 justify-center items-center px-16 py-24">
             <ConnectEvmButton />
          </div>
       </div>
    );
-};
+});

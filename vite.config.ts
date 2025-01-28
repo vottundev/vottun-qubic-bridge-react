@@ -1,3 +1,4 @@
+import MillionLint from "@million/lint";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "node:path";
@@ -7,30 +8,33 @@ import { defineConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        react(),
-        TanStackRouterVite(),
-        viteStaticCopy({
-            targets: [
-                {
-                    src: normalizePath(path.resolve("./src/assets/locales")),
-                    dest: normalizePath(path.resolve("./dist")),
-                },
-            ],
-        }),
-    ],
-    server: {
-        host: true,
-        strictPort: true,
-    },
-    resolve: {
-        alias: {
-            "@": path.resolve(__dirname, "./src"),
-        },
-    },
-    test: {
-        environment: "jsdom",
-        setupFiles: ["./vitest.setup.ts"],
-        css: true,
-    },
+   plugins: [
+      MillionLint.vite({
+         enabled: true,
+      }),
+      react(),
+      TanStackRouterVite(),
+      viteStaticCopy({
+         targets: [
+            {
+               src: normalizePath(path.resolve("./src/assets/locales")),
+               dest: normalizePath(path.resolve("./dist")),
+            },
+         ],
+      }),
+   ],
+   server: {
+      host: true,
+      strictPort: true,
+   },
+   resolve: {
+      alias: {
+         "@": path.resolve(__dirname, "./src"),
+      },
+   },
+   test: {
+      environment: "jsdom",
+      setupFiles: ["./vitest.setup.ts"],
+      css: true,
+   },
 });
